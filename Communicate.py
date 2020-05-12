@@ -1,3 +1,25 @@
+'''
+                    
+  /$$$$$$   /$$$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$   /$$      
+ /$$__  $$ | $$_____/ | $$__  $$ |_  $$_/  /$$__  $$ | $$      
+| $$  \__/ | $$       | $$  \ $$   | $$   | $$  \ $$ | $$      
+|  $$$$$$  | $$$$$    | $$$$$$$/   | $$   | $$$$$$$$ | $$      
+ \____  $$ | $$__/    | $$__  $$   | $$   | $$__  $$ | $$      
+ /$$  \ $$ | $$       | $$  \ $$   | $$   | $$  | $$ | $$      
+|  $$$$$$/ | $$$$$$$$ | $$  | $$  /$$$$$$ | $$  | $$ | $$$$$$$$
+ \______/  |________/ |__/  |__/ |______/ |__/  |__/ |________/
+
+                 /$$$$$$   /$$$$$$    /$$$$$$  
+                |_  $$_/  /$$__  $$  /$$__  $$ 
+                  | $$   |__/  \ $$ | $$  \__/ 
+                  | $$     /$$$$$$/ | $$       
+                  | $$    /$$____/  | $$       
+                  | $$   | $$       | $$    $$ 
+                 /$$$$$$ | $$$$$$$$ |  $$$$$$/ 
+                |______/ |________/  \______/  
+                                                               
+'''
+
 import warnings
 import serial
 import serial.tools.list_ports
@@ -81,7 +103,7 @@ def Sine_Wave():
 
     PI = math.pi;
     A = 512;
-    off = 2000;
+    off = 512;
     fs = 1000;
     f = 1;
     m = 1000;
@@ -162,7 +184,6 @@ def my_protocol(protocolo, direccion=0):
       listBytes.append(chr(CRC_s))            # lista con CRC
       my_list = to_number(listBytes)
       enviarYrecibirbytes(serialArduino,my_list)
-
     cerrarPuerto(serialArduino)
     export_CSV(n, sine, "written_data")
 #------------------------------------------------------------------------------#
@@ -174,9 +195,11 @@ def my_protocol(protocolo, direccion=0):
       listBytes.append(chr(CRC_s))            # lista con CRC
       my_list = to_number(listBytes)
       enviarYrecibirbytes(serialArduino,my_list)
-      MOST = ord(serialArduino.read(1))
-      LEAST = ord(serialArduino.read(1))
-      data = np.int((MOST << 8) | LEAST)
+      MOST = (serialArduino.read(1))
+      LEAST = (serialArduino.read(1))
+      mos = MOST[0]
+      leas = LEAST[0]
+      data = (((mos) << 8) | (leas))
       print("Data MSB: ", MOST)
       print("Data LSB: ", LEAST)
       print("Data: ", data)
@@ -192,9 +215,11 @@ def my_protocol(protocolo, direccion=0):
     listBytes.append(chr(CRC_s))            # lista con CRC
     my_list = to_number(listBytes)
     enviarYrecibirbytes(serialArduino,my_list)
-    MOST = ord(serialArduino.read(1))
-    LEAST = ord(serialArduino.read(1))
-    data = np.int((MOST << 8) | LEAST)
+    MOST = (serialArduino.read(1))
+    LEAST = (serialArduino.read(1))
+    mos = (MOST[0])
+    leas = (LEAST[0])
+    data = (((mos) << 8) | (leas))
     print("Data MSB: ", MOST)
     print("Data LSB: ", LEAST)
     print("Data: ", data)
@@ -204,11 +229,11 @@ def my_protocol(protocolo, direccion=0):
     raise IOError("El protocolo no es valido")
 
 ################################################################################
-if __name__ == "__main__":
+if _name_ == "_main_":
   
   # 1: escribir 1000 datos
   # 2: leer 1000 datos
   # 3: leer un solo dato, tambien se debe enviar el paquete que se quiere leer
-  protocolo = 1
-  my_protocol(protocolo)
-    
+  protocolo = 3
+  my_protocol(protocolo,469)
+  my_protocol(protocolo,10)
