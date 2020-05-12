@@ -39,25 +39,25 @@ We create our communication protocols, the protocols are:
     1: Write 1000 data in memory from PC, the protocol write one-to-one data, type data is integer (16 bits - 2 bytes).
        Control word:
     
-                        =======================================================================   
-                        | '#' | '1' | Addres(MSB) | Addres(LSB) | Data(MSB) | Data(LSB) | CRC |   
-                        =======================================================================       
+                          =======================================================================   
+                          | '#' | '1' | Addres(MSB) | Addres(LSB) | Data(MSB) | Data(LSB) | CRC |   
+                          =======================================================================       
        
     
     2: Read 1000 data from memory and write it in PC by serial communication, the protocol read one-to-one data.
        Control word:
        
-                                   ===============================================                
-                                   | '#' | '2' | Addres(MSB) | Addres(LSB) | CRC |                
-                                   ===============================================                      
+                                       ===============================================                
+                                       | '#' | '2' | Addres(MSB) | Addres(LSB) | CRC |                
+                                       ===============================================                      
     
     
     3: Read only one data in specific address (package-data) request from PC.
        Control word:
        
-                                   ===============================================                
-                                   | '#' | '3' | Addres(MSB) | Addres(LSB) | CRC |                
-                                   ===============================================                       
+                                       ===============================================                
+                                       | '#' | '3' | Addres(MSB) | Addres(LSB) | CRC |                
+                                       ===============================================                       
        
        
 --<--------------------------------------------------------------------------------------------------------------------------------------->--
